@@ -109,6 +109,43 @@ See [Backup & Restore](BACKUP.md) for full details and [Restore Guide](RESTORE.m
 
 ---
 
+## Queue Cleanup
+
+Torrents frequently stall (dead seeders, stuck metadata, failed imports). The cleanup script removes stuck items, blocklists them, and triggers fresh searches:
+
+```bash
+# Dry run — see what would be removed
+./scripts/queue-cleanup.sh
+
+# Actually remove stuck items
+./scripts/queue-cleanup.sh --apply
+
+# With verbose output
+./scripts/queue-cleanup.sh --apply -v
+```
+
+### Automated (cron)
+
+Add to NAS crontab (`crontab -e`):
+
+```bash
+# Thursday 2am — clean stuck downloads weekly
+0 2 * * 4 /volume1/docker/arr-stack/scripts/queue-cleanup.sh --apply >> /var/log/queue-cleanup.log 2>&1
+```
+
+### What gets removed
+
+- Downloads stalled with no connections (dead seeders)
+- Torrents stuck downloading metadata (no peers)
+- Failed imports (downloaded but can't import)
+- Items at 0% progress for more than 24 hours
+
+Items with **any** download progress are never removed, even if slow.
+
+Removed releases are blocklisted so the same broken release won't be grabbed again. A fresh search is triggered for each affected series/movie to find better-seeded alternatives.
+
+---
+
 ## Health Checks
 
 All services have Docker healthchecks. Check status:
