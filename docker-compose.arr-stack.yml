@@ -290,6 +290,9 @@ services:
     image: jellyfin/jellyfin:10.11
     container_name: jellyfin
     <<: *default-security
+    cap_add:
+      - CHOWN           # Create config/cache subdirs on first run
+      - DAC_OVERRIDE    # Write to root-owned volume directories
     ports:
       - "8096:8096"     # Web UI
       - "7359:7359/udp" # Client discovery (auto-detect on LAN)
@@ -371,6 +374,9 @@ services:
     init: true
     container_name: seerr
     <<: *default-security
+    cap_add:
+      - CHOWN           # Create config subdirs on first run
+      - DAC_OVERRIDE    # Write to root-owned volume directories
     depends_on:
       gluetun:
         condition: service_healthy  # Needs gluetun to reach Sonarr/Radarr

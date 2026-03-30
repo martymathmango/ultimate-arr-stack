@@ -74,6 +74,10 @@ services:
     image: louislam/uptime-kuma:2
     container_name: uptime-kuma
     <<: *default-security
+    cap_add:
+      - CHOWN           # Create subdirs in data volume on first run
+      - DAC_OVERRIDE    # Write to root-owned volume directories
+      - FOWNER          # Set ownership on created files
     restart: always
     ports:
       - "3001:3001"  # Local network access only
@@ -102,6 +106,9 @@ services:
     image: mkoestler/duc-service:v1.1.0
     container_name: duc
     <<: *default-security
+    cap_add:
+      - CHOWN           # Nginx chown on startup
+      - DAC_OVERRIDE    # Write to root-owned volume directories
     networks:
       arr-stack:
         ipv4_address: 172.20.0.14
@@ -125,6 +132,9 @@ services:
     image: henrygd/beszel:0.18
     container_name: beszel
     <<: *default-security
+    cap_add:
+      - CHOWN           # Create data dirs on first run
+      - DAC_OVERRIDE    # Write to root-owned volume directories
     restart: always
     ports:
       - "8090:8090"
@@ -173,6 +183,9 @@ services:
     image: crazymax/diun:4.31.0
     container_name: diun
     <<: *default-security
+    cap_add:
+      - CHOWN           # Create data dirs on first run
+      - DAC_OVERRIDE    # Write to root-owned volume directories
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -202,6 +215,9 @@ services:
     image: ghcr.io/raydak-labs/configarr:1.24.0
     container_name: configarr
     <<: *default-security
+    cap_add:
+      - CHOWN           # Create repo dirs on first run
+      - DAC_OVERRIDE    # Write to root-owned volume directories
     restart: "no"
     networks:
       - arr-stack
