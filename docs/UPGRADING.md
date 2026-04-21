@@ -38,6 +38,12 @@ docker compose -f docker-compose.arr-stack.yml up -d  # Restarts containers with
 
 When upgrading across versions, check below for any action required.
 
+### v1.7.9 → v1.7.10
+
+Docs-only fix. No migration needed — just `git pull`.
+
+The clone block in SETUP.md (Ugreen and Synology sections) referenced `$NAS_STACK_DIR` in `chown` before `.env` existed, causing `chown: missing operand`. Fixed by setting the variable at the top of the block so volume2 users only change one line.
+
 ### v1.7.8 → v1.7.9
 
 Fixes Pi-hole startup failure on multi-volume NAS setups (#16) and adds `NAS_STACK_DIR` env var.

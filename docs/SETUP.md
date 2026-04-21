@@ -199,10 +199,15 @@ sudo mkdir -p /volume1/data/torrents/{tv,movies}
 sudo mkdir -p /volume1/data/usenet/{incomplete,complete/{tv,movies}}
 sudo chown -R 1000:1000 /volume1/data/media /volume1/data/torrents /volume1/data/usenet
 
+# Set where the stack lives. Default is volume1; change to /volume2/docker/arr-stack
+# if you want the stack on an SSD or second volume. You'll also set this in .env later.
+NAS_STACK_DIR=/volume1/docker/arr-stack
+
 # Clone the repo
-cd /volume1/docker
-sudo git clone https://github.com/Pharkie/ultimate-arr-stack.git arr-stack  # or your fork
-sudo chown -R 1000:1000 $NAS_STACK_DIR
+sudo mkdir -p "$(dirname "$NAS_STACK_DIR")"
+cd "$(dirname "$NAS_STACK_DIR")"
+sudo git clone https://github.com/Pharkie/ultimate-arr-stack.git "$(basename "$NAS_STACK_DIR")"  # or your fork
+sudo chown -R 1000:1000 "$NAS_STACK_DIR"
 ```
 
 **Note:** Use `sudo` for Docker commands on Ugreen NAS. Service configs are stored in Docker named volumes (auto-created on first run).
@@ -242,10 +247,15 @@ sudo mkdir -p /volume1/data/torrents/{tv,movies}
 sudo mkdir -p /volume1/data/usenet/{incomplete,complete/{tv,movies}}
 sudo chown -R 1000:1000 /volume1/data/media /volume1/data/torrents /volume1/data/usenet
 
+# Set where the stack lives. Default is volume1; change to /volume2/docker/arr-stack
+# if you want the stack on an SSD or second volume. You'll also set this in .env later.
+NAS_STACK_DIR=/volume1/docker/arr-stack
+
 # Clone the repo
-cd /volume1/docker
-sudo git clone https://github.com/Pharkie/ultimate-arr-stack.git arr-stack  # or your fork
-sudo chown -R 1000:1000 $NAS_STACK_DIR
+sudo mkdir -p "$(dirname "$NAS_STACK_DIR")"
+cd "$(dirname "$NAS_STACK_DIR")"
+sudo git clone https://github.com/Pharkie/ultimate-arr-stack.git "$(basename "$NAS_STACK_DIR")"  # or your fork
+sudo chown -R 1000:1000 "$NAS_STACK_DIR"
 ```
 
 </details>
@@ -339,6 +349,8 @@ id                     # Shows YOUR user's UID/GID - these should match
 ```
 
 If wrong, you'll see errors like "Folder '/tv/' is not writable by user 'abc'" in Sonarr/Radarr.
+
+> **Do I need a separate non-admin NAS user for the stack?** No. The containers already run as a non-root UID via `PUID`/`PGID`, and the Docker daemon itself runs as root regardless of which NAS login invoked `docker compose` — so a dedicated non-admin account wouldn't shrink the blast radius of a container compromise. Skip it.
 
 ### 2.3 Timezone
 
