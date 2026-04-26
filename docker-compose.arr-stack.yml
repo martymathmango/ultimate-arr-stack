@@ -361,8 +361,8 @@ services:
       dnscrypt-proxy:
         condition: service_healthy
     ports:
-      - "${NAS_IP}:53:53/tcp"  # Bind to NAS IP (not 0.0.0.0) to avoid conflict with host dnsmasq on 127.0.0.1:53
-      - "${NAS_IP}:53:53/udp"  # NAS_IP MUST be a static IP — DHCP IPs aren't ready at boot, causing exit 128
+      - "$192.168.0.160:53:53/tcp"  # Bind to NAS IP (not 0.0.0.0) to avoid conflict with host dnsmasq on 127.0.0.1:53
+      - "$192.168.0.160:53:53/udp"  # NAS_IP MUST be a static IP — DHCP IPs aren't ready at boot, causing exit 128
       - "8081:80"  # Web UI (local network access)
     networks:
       arr-stack:
