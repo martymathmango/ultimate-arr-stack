@@ -206,7 +206,7 @@ NAS_STACK_DIR=/volume1/docker/arr-stack
 # Clone the repo
 sudo mkdir -p "$(dirname "$NAS_STACK_DIR")"
 cd "$(dirname "$NAS_STACK_DIR")"
-sudo git clone https://github.com/Pharkie/ultimate-arr-stack.git "$(basename "$NAS_STACK_DIR")"  # or your fork
+sudo git clone https://github.com/martymathmango/ultimate-arr-stack.git "$(basename "$NAS_STACK_DIR")"  # or your fork
 sudo chown -R 1000:1000 "$NAS_STACK_DIR"
 ```
 
