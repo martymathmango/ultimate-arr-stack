@@ -114,6 +114,7 @@ services:
       - "8085:8085"   # qBittorrent
       - "8082:8080"   # SABnzbd
       - "8191:8191"   # FlareSolverr
+      - "8686:8686"   # Lidarr 
     networks:
       arr-stack:
         ipv4_address: 172.20.0.3
@@ -496,7 +497,10 @@ services:
       timeout: 60s
       retries: 2
       start_period: 60s
+<<<<<<< HEAD
 
+=======
+>>>>>>> 16de65dfcbbbbf096b4c9fb8e886f887cbc853c1
 # ═══════════════════════════════════════════════════════════════════════════
   # LIDARR - Music monitor.
   # Access: lidarr.lan | NAS_IP:8686
