@@ -105,6 +105,13 @@ services:
       - TZ=${TZ}
       - DNS_ADDRESS=1.1.1.1
       - FIREWALL_OUTBOUND_SUBNETS=${LAN_SUBNET},172.20.0.0/24,10.8.1.0/24
+      # Port forwarding
+      - VPN_PORT_FORWARDING=${VPN_PORT_FORWARDING}
+      - VPN_PORT_FORWARDING_PROVIDER=${VPN_PORT_FORWARDING_PROVIDER}
+      - VPN_PORT_FORWARDING_LISTENING_PORT_SYNC=${VPN_PORT_FORWARDING_LISTENING_PORT_SYNC}
+      - QBITTORRENT_WEBUI_USERNAME=${QBITTORRENT_WEBUI_USERNAME}
+      - QBITTORRENT_WEBUI_PASSWORD=${QBITTORRENT_WEBUI_PASSWORD}
+      - QBITTORRENT_WEBUI_PORT=${QBITTORRENT_WEBUI_PORT}
     ports:
       # Ports for services using network_mode: "service:gluetun"
       # Enables direct local access without Traefik (http://NAS_IP:PORT)
@@ -497,10 +504,7 @@ services:
       timeout: 60s
       retries: 2
       start_period: 60s
-<<<<<<< HEAD
 
-=======
->>>>>>> 16de65dfcbbbbf096b4c9fb8e886f887cbc853c1
 # ═══════════════════════════════════════════════════════════════════════════
   # LIDARR - Music monitor.
   # Access: lidarr.lan | NAS_IP:8686
